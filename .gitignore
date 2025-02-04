@@ -4,8 +4,6 @@
 /build
 
 notes.txt
-Dockerfile
-.dockerignore
 
 # excluye la carpeta de generated
 /generated/*
