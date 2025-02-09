@@ -35,31 +35,33 @@ jobs:
           format: '${major}.${minor}.${patch}-prerelease${increment}'
         id: version
 
-      - name: Docker Login
-        env:
-          DOCKER_USER: ${{ secrets.DOKCER_USER }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          echo "Iniciando login"
-          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-          echo "fin del login"
+      # - name: Docker Login
+      #   env:
+      #     DOCKER_USER: ${{ secrets.DOKCER_USER }}
+      #     DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      #   run: |
+      #     echo "Iniciando login"
+      #     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+      #     echo "fin del login"
 
-      - name: Build Docker Image
-        env:
-          NEW_VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          docker build -t snatera/docker-chat-openai:$NEW_VERSION .
-          docker build -t snatera/docker-chat-openai:latest .
+      # - name: Build Docker Image
+      #   env:
+      #     NEW_VERSION: ${{ steps.version.outputs.version }}
+      #   run: |
+      #     docker build -t snatera/docker-chat-openai:$NEW_VERSION .
+      #     docker build -t snatera/docker-chat-openai:latest .
 
-      - name: Push Docker Image
-        env:
-          NEW_VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          docker push snatera/docker-chat-openai:$NEW_VERSION
-          docker push snatera/docker-chat-openai:latest
+      # - name: Push Docker Image
+      #   env:
+      #     NEW_VERSION: ${{ steps.version.outputs.version }}
+      #   run: |
+      #     docker push snatera/docker-chat-openai:$NEW_VERSION
+      #     docker push snatera/docker-chat-openai:latest
 
       - name: Build App
         run: |
+          ls
+          rm package-lock.json
           npm ci --legacy-peer-deps --no-fund --no-audit
           npm run build
 
