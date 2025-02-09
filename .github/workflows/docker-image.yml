@@ -14,11 +14,18 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [18.16.1]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
+          cache: 'npm'
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
+      #   with:
+      #     fetch-depth: 0
 
       - name: Git Semantic Version
         uses: PaulHatch/semantic-version@v4.0.3
@@ -50,6 +57,11 @@ jobs:
         run: |
           docker push snatera/docker-chat-openai:$NEW_VERSION
           docker push snatera/docker-chat-openai:latest
+
+      - name: Build App
+        run: |
+          npm ci --legacy-peer-deps --no-fund --no-audit
+          npm run build
 
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
