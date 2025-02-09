@@ -62,7 +62,7 @@ jobs:
         run: |
           ls
           rm package-lock.json
-          npm ci --legacy-peer-deps --no-fund --no-audit
+          npm i --legacy-peer-deps --no-fund --no-audit
           npm run build
 
     # - name: Build the Docker image
