@@ -61,9 +61,8 @@ jobs:
       - name: Build App
         run: |
           ls
-          rm package-lock.json
           npm i --legacy-peer-deps --no-fund --no-audit
           npm run build
-
+    # npm ci : clear install, eso para que instala todo tal cual esta en el package-lock.json
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
